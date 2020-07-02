@@ -1,2 +1,2 @@
-# Ontolorbidge-website
+# Ontolobridge-website
 Repository containing the front facing website for Ontolobridge
