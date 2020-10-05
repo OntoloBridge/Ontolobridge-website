@@ -1,4 +1,5 @@
 <?php
+require_once("util/include.php");
 include("checkLogin.php");
 $step1 = "submitSteps";
 $step2 = "submitSteps";

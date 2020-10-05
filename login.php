@@ -38,7 +38,7 @@ if(isset($_POST['username']) &&isset($_POST['password'])) {
     $_SESSION['token'] = $data['accessToken'];
 
     //check if we have all the required details set before you can use the website.
-    $response = $curl->get(Constants::ONTOLOBRIDGE_URL."auth/checkDetails");
+    $response = $curl->get(Constants::ONTOLOBRIDGE_URL."auth/retrieveMissingDetails");
     $httpCode = $curl->http_status_code;
     if ($httpCode === 0) {
         destroy_sessions();
@@ -51,7 +51,6 @@ if(isset($_POST['username']) &&isset($_POST['password'])) {
         redirect("/login");
     }
     $data = json_decode($response, true);
-    $data['count'] = 0;
     //if we have all the required data then send to front page, otherwise request the details
     if($data['count'] == 0) {
         $_SESSION['message'] = "Login Success";

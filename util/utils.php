@@ -9,6 +9,14 @@ function redirect($url){
 /**
  * @param OntolobridgeCurl $curl
  */
+function checkRefreshToken($curl){
+    //if we have a token set and the url contains the ontolobridge url, add the authorization header
+    if(isset($curl->response_headers['jwtToken']) && isset($_SESSION['token']))
+        $_SESSION['token'] = $curl->response_headers['jwtToken'];
+}
+/**
+ * @param OntolobridgeCurl $curl
+ */
 function addToken($curl){
     //if we have a token set and the url contains the ontolobridge url, add the authorization header
     if(isset($_SESSION['token'])&& strpos($curl->url, Constants::ONTOLOBRIDGE_URL) !== false )

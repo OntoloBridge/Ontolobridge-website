@@ -390,6 +390,7 @@ class OntolobridgeCurl
 
                 if (!$binary_data) {
                     $data = http_build_query($data);
+                    $data = preg_replace('[]', '', $data);
                 }
             }
         }
@@ -480,7 +481,7 @@ class OntolobridgeCurl
 
         foreach ($data as $k => $value) {
             if (\is_string($value) || \is_numeric($value)) {
-                $brackets = $is_array_assoc ? '[' . $k . ']' : '[]';
+                $brackets = $is_array_assoc ? '[' . $k . ']' : '';
                 $query[] = \urlencode($key === null ? $k : $key . $brackets) . '=' . \rawurlencode($value);
             } elseif (\is_array($value)) {
                 $nested = $key === null ? $k : $key . '[' . $k . ']';

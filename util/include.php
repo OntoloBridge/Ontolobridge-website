@@ -5,6 +5,7 @@ include_once("constants.php");
 include_once("utils.php");
 $curl = new OntolobridgeCurl();
 $curl->beforeSend("addToken");
+$curl->complete("checkRefreshToken");
 
 //Allow changing of color of message box on pages
 $message_type = "warning";
