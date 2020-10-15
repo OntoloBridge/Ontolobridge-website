@@ -24,7 +24,7 @@ if(isset($_POST['formSubmit'])) {
         $submitPostData['fields'][] = $key;
         $submitPostData['data'][] = $value;
     }
-    $response = $curl->post(Constants::ONTOLOBRIDGE_URL."auth/updateUser",$submitPostData);
+    $response = $curl->post(Constants::ONTOLOBRIDGE_URL."user/details",$submitPostData);
     $httpCode = $curl->http_status_code;
     if ($httpCode === 0) {
         $_SESSION['message'] = "backend has went away";
@@ -34,7 +34,7 @@ if(isset($_POST['formSubmit'])) {
         redirect("/");
     }
 }
-$response = $curl->get(Constants::ONTOLOBRIDGE_URL."auth/getUserDetails");
+$response = $curl->get(Constants::ONTOLOBRIDGE_URL."user/details");
 $httpCode = $curl->http_status_code;
 if ($httpCode === 0) {
     $_SESSION['message'] = "backend has went away";
@@ -72,31 +72,7 @@ $userDetails = $data['details'];
                 <div class="col text-center">Finish Registration</div>
                 <div class="col-4"> </div>
             </div>
-            <?php
-            foreach($detailsForm['data'] as $detail){
-                $currentDetail= "";
-                if($userDetails != null && array_key_exists($detail['field'],$userDetails)) //if the field is already set then populate the field.
-                    $currentDetail= $userDetails[$detail['field']];
-                ?>
-                    <div class="row">
-                        <div class="col-4"> </div>
-                        <div class="col"><?php echo $detail['pretty_name'];?> <?php echo $detail['required']==1?"*":"";?>:</div>
-                        <div class="col">
-                            <?php if ($detail['field_type'] == "text"){ ?>
-                                <input class ="container-fluid field-form" type="text" id="<?php echo $detail['field'];?>" value="<?php echo $currentDetail;?>">
-                            <?php }else if ($detail['field_type'] == "list") { ?>
-                                <select class ="container-fluid field-form" id="<?php echo $detail['field'];?>" value="<?php echo $currentDetail;?>">
-                                <?php foreach($detail['allowed_values'] as $aValue){ ?>
-                                    <option <?php echo $aValue==$currentDetail?"selected":""; ?>value="<?php echo $aValue; ?>"><?php echo $aValue; ?> </option>
-                                <?php }?>
-                                </select>
-                            <?php } ?>
-                        </div>
-                        <div class="col-4"> </div>
-                    </div>
-                <?php
-            }
-            ?>
+            <?php include("util/detailsForm.php"); ?>
             <div class="row text-center">
                 <form action="/finish_registration" method="post" id="form" name="form">
                     <input type="hidden" name="formSubmit" value="1">

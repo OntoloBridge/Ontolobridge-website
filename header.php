@@ -11,9 +11,14 @@
     <link rel="stylesheet" href="css/bootstrap-utilities.css">
     <link rel="stylesheet" href="css/footer.css">
     <style type="text/css">
-        .row {padding-top: 10px}
+        .row {
+            padding-top: 10px
+        }
+        .last-row{
+            padding-bottom: 50px;
+        }
     </style>
-
+    <?php if(isset($extraTags)) echo $extraTags; ?>
 </head>
 <body>
     <script src="js/jquery.min.js"></script>
