@@ -9,10 +9,17 @@ function redirect($url){
 /**
  * @param OntolobridgeCurl $curl
  */
-function checkRefreshToken($curl){
+function curlComplete($curl){
     //if we have a token set and the url contains the ontolobridge url, add the authorization header
     if(isset($curl->response_headers['jwtToken']) && isset($_SESSION['token']))
         $_SESSION['token'] = $curl->response_headers['jwtToken'];
+    $data = json_decode($curl->response, true);
+    if(isset($data['error']) && $data['error'] == 5 && $_SERVER['REQUEST_URI'] != "/finish_registration"){
+        $_SESSION['message'] = "You must complete your registration";
+        $_SESSION['message_type']="success";
+        redirect("/finish_registration");
+        die();
+    }
 }
 /**
  * @param OntolobridgeCurl $curl

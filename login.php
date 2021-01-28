@@ -53,8 +53,23 @@ if(isset($_POST['username']) &&isset($_POST['password'])) {
     $data = json_decode($response, true);
     //if we have all the required data then send to front page, otherwise request the details
     if($data['count'] == 0) {
+        $response = $curl->get(Constants::ONTOLOBRIDGE_URL."user/roles");
+        $httpCode = $curl->http_status_code;
+        if ($httpCode === 0) {
+            destroy_sessions();
+            $_SESSION['message'] = "backend has went away";
+            redirect("/login");
+        }
+        if ($httpCode !== 200) {
+            destroy_sessions();
+            $_SESSION['message'] = $data['message'];
+            redirect("/login");
+        }
+        $data = json_decode($response, true);
+        //if we have all the required data then send to front page, otherwise request the details
+        $_SESSION['roles'] = $data;
         $_SESSION['message'] = "Login Success";
-        $_SESSION['message_type']="success";
+        $_SESSION['message_type'] = "success";
         redirect("/index.php");
     }else {
         redirect("/finish_registration");
@@ -77,13 +92,19 @@ if(isset($_POST['username']) &&isset($_POST['password'])) {
                     .appendTo("#form");
                 $("#form").trigger("submit");
             });
+            $(document).on('keydown',function(e) {
+                if ((e.key === 'Enter' || e.keyCode === 13)
+                    && $("#password").val()
+                    && $("#username").val()){
+                    $('#btnSend').trigger('click')
+                }
+            });
         });
     </script>
 
-    <div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom shadow-sm">
-        <h5 class="my-0 mr-md-auto font-weight-normal">Ontolobridge</h5>
-    </div>
-
+<?php include("navBar.php"); ?>
+<main class="container" role="main">
+    <?php include("util/displayMessage.php"); ?>
     <div class="container d-flex h-100">
         <div class="row align-self-center w-100">
             <div class="col-6 mx-auto">
@@ -118,6 +139,7 @@ if(isset($_POST['username']) &&isset($_POST['password'])) {
             </div>
         </div>
     </div>
+</main>
     <?php
         echo file_get_contents("footer.html");
     ?>

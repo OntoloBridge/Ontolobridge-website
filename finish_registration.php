@@ -61,10 +61,9 @@ $userDetails = $data['details'];
         });
     </script>
 
-    <div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom shadow-sm">
-        <h5 class="my-0 mr-md-auto font-weight-normal">Ontolobridge</h5>
-    </div>
-
+<?php include("navBar.php"); ?>
+<main class="container" role="main">
+    <?php include("util/displayMessage.php"); ?>
     <div class="container d-flex h-100">
         <div class="row align-self-center w-100">
             <div class="row">
@@ -81,6 +80,7 @@ $userDetails = $data['details'];
             </div>
         </div>
     </div>
+</main>
     <?php
     echo file_get_contents("footer.html");
     ?>

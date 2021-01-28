@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="css/bootstrap-reboot.css">
     <link rel="stylesheet" href="css/bootstrap-utilities.css">
     <link rel="stylesheet" href="css/footer.css">
+    <link rel="stylesheet" href="css/main.css">
     <style type="text/css">
         .row {
             padding-top: 10px
