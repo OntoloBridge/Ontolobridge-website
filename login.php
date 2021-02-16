@@ -135,6 +135,9 @@ if(isset($_POST['username']) &&isset($_POST['password'])) {
                     <div class="row text-center">
                         <div class="col"><a href="/register"><div  class="btn btn-secondary btn-lg">Register</div></a></div>
                     </div>
+                    <div class="row text-center">
+                        <div class="col"><a href="/reset_password"><div  class="btn btn-secondary btn-lg">Lost Password?</div></a></div>
+                    </div>
                 </div>
             </div>
         </div>
